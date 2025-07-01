@@ -13,5 +13,5 @@ public interface music {
     void next();
     void previous();
     void select(Optional<Integer> identifier);
-    playMedia run();
+    void run();
 }

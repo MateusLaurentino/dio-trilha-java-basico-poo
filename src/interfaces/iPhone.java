@@ -1,13 +1,13 @@
 package interfaces;
 
-import application.musicApp;
+import application.*;
 import domain.models.playMedia;
 
 import java.util.Scanner;
 
 public class iPhone {
-    private static playMedia playingMusic;
-    private static boolean inCall = false;
+    private static phoneApp phone = new phoneApp();
+    private static musicApp music = new musicApp();
 
     public static void main(String[] args) {
         System.out.println("Inicializando...\n");
@@ -16,14 +16,15 @@ public class iPhone {
         var scanner = new Scanner(System.in);
         var using = true;
         while (using){
-            System.out.println("Aplicativos:");
+            System.out.println("Aplicativos:\n");
             System.out.println("1 - Player");
             System.out.println("2 - Phone");
             System.out.println("3 - Internet");
             System.out.println("4 - Desligar");
 
-            System.out.println("\nSelecione um aplicativo:");
+            System.out.println("Selecione um aplicativo:");
             var option = scanner.nextInt();
+            System.out.println();
 
             switch (option){
                 case 1 -> player();
@@ -33,24 +34,23 @@ public class iPhone {
                 default -> System.out.println("Opção informada é inválida.");
             }
 
-            System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+            System.out.println("\n");
         }
 
         scanner.close();
     }
 
     public static void player(){
-        if (inCall){
+        if (phoneApp.inCall != null && phoneApp.inCall.isInCall()){
             System.out.println("Não é possivel reproduzir musica enquanto estiver em uma ligação.");
             return;
         }
 
-        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-        playingMusic = new musicApp(playingMusic).run();
+        music.run();
     }
 
     private static void phone(){
-
+        phone.run();
     }
 
     private static void internet(){

@@ -1,6 +1,6 @@
 package application;
 
-import domain.models.Music;
+import domain.models.playMusic;
 import domain.models.playMedia;
 import domain.services.music;
 
@@ -11,30 +11,28 @@ import java.util.Optional;
 import java.util.Scanner;
 
 public class musicApp implements music {
-    private final Scanner scanner = new Scanner(System.in);
-    private playMedia playingMusic;
-    private final List<Music> musics = Arrays.asList(
-            new Music(1, "A Maior Honra", "Julliany Souza", 11.22D),
-            new Music(2, "Deus é quem me fortalece", "Julliany Souza", 6.23D),
-            new Music(3, "Escape", "Renascer Praise", 7.06D),
-            new Music(4, "Gratidão", "Gabriel Brito", 5.37D),
-            new Music(5, "Jesus Sempre Tem Mais", "Gabriel Brito", 4.32D),
-            new Music(6, "Minha Calmaria", "Gabriel Brito", 3.39D),
-            new Music(7, "Passa Lá em Casa Jesus", "Kailane Frauches", 4.54D),
-            new Music(8, "Reascende a chama", "Sued Silva", 7.57D),
-            new Music(9, "Simplesmente Sobrenatural", "Matheus Trindade", 4.28D)
+    private static final Scanner scanner = new Scanner(System.in);
+    public static playMedia playingMusic;
+    private static final List<playMusic> musics = Arrays.asList(
+            new playMusic(1, "A Maior Honra", "Julliany Souza", 11.22D),
+            new playMusic(2, "Deus é quem me fortalece", "Julliany Souza", 6.23D),
+            new playMusic(3, "Escape", "Renascer Praise", 7.06D),
+            new playMusic(4, "Gratidão", "Gabriel Brito", 5.37D),
+            new playMusic(5, "Jesus Sempre Tem Mais", "Gabriel Brito", 4.32D),
+            new playMusic(6, "Minha Calmaria", "Gabriel Brito", 3.39D),
+            new playMusic(7, "Passa Lá em Casa Jesus", "Kailane Frauches", 4.54D),
+            new playMusic(8, "Reascende a chama", "Sued Silva", 7.57D),
+            new playMusic(9, "Simplesmente Sobrenatural", "Matheus Trindade", 4.28D)
     );
-
-    public musicApp(playMedia playingMusic) {
-        this.playingMusic = playingMusic;
-    }
 
     @Override
     public void musicPlaying(){
-        if(playingMusic != null)
-            System.out.println("Musica atual - " + playingMusic.getName() + "\n");
-        else
+        if(playingMusic == null){
             System.out.println("Nenhuma musica foi escolhida para reproduzir.\n");
+            return;
+        }
+        var musicState = playingMusic.isPlaying() ? "reproduzindo" : "pausada";
+        System.out.println("Musica atual - " + playingMusic.getName() + " esta " + musicState + "\n");
     }
 
     @Override
@@ -80,7 +78,7 @@ public class musicApp implements music {
     public void find() {
         var ordered = musics
                 .stream()
-                .sorted(Comparator.comparing(Music::getName, String.CASE_INSENSITIVE_ORDER))
+                .sorted(Comparator.comparing(playMusic::getName, String.CASE_INSENSITIVE_ORDER))
                 .toList();
 
         selectMusic(ordered);
@@ -122,7 +120,7 @@ public class musicApp implements music {
         System.out.printf("\nReproduzindo a musica: %s\n\n", playingMusic.getName());
     }
 
-    public playMedia run() {
+    public void run() {
         var using = true;
         while (using) {
             System.out.println("1 - Musica tocando");
@@ -151,12 +149,10 @@ public class musicApp implements music {
                 default -> System.out.println("Opção inválida. \n\n");
             }
         }
-
-        return playingMusic;
     }
 
-    private void selectMusic(List<Music> listMusic) {
-        Optional<Music> music = Optional.empty();
+    private void selectMusic(List<playMusic> listMusic) {
+        Optional<playMusic> music = Optional.empty();
         while (music.isEmpty()) {
             showMusics(listMusic);
             System.out.println("Informe o identificador ou 0 para voltar:");
@@ -176,7 +172,7 @@ public class musicApp implements music {
         music.ifPresent(value -> select(value.getIdentifier().describeConstable()));
     }
 
-    private void showMusics(List<Music> listMusic) {
+    private void showMusics(List<playMusic> listMusic) {
         for (var music : listMusic) {
             System.out.printf(
                     "Identificador = %s, Nome = %s, Artista = %s \n",

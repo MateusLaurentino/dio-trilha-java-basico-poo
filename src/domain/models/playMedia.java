@@ -5,7 +5,7 @@ public class playMedia {
     private Integer identifierMusic;
     private boolean playing;
 
-    public playMedia(Music music) {
+    public playMedia(playMusic music) {
         this.name = music.getName();
         this.identifierMusic = music.getIdentifier();
         this.playing = true;

@@ -53,8 +53,8 @@ public class phoneApp implements phone {
     @Override
     public void endCall() {
         callHistory.add(new historyCall(inCall.getInfoContacts()));
-        inCall = null;
-        System.out.println("Ligação encerrada.");
+        inCall.endCall();
+        System.out.println("Ligação encerrada.\n");
     }
 
     @Override
@@ -203,8 +203,7 @@ public class phoneApp implements phone {
             scanner.nextLine();
 
             if(option == 1){
-                inCall.endCall();
-                System.out.println("Chamada encerrada.\n");
+                endCall();
                 break;
             }
             else if (option == 2){

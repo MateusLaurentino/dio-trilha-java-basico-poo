@@ -8,6 +8,7 @@ import java.util.Scanner;
 public class iPhone {
     private static phoneApp phone = new phoneApp();
     private static musicApp music = new musicApp();
+    private static internetApp internet = new internetApp();
 
     public static void main(String[] args) {
         System.out.println("Inicializando...\n");
@@ -54,6 +55,6 @@ public class iPhone {
     }
 
     private static void internet(){
-
+        internet.run();
     }
 }
